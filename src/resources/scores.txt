@@ -23,8 +23,3 @@ Computer@20000@alone
 Computer@25000@alone
 Computer@30000@alone
 Computer@35000@alone
-TechDemo@35929@difficult
-TechDemo@29984@medium
-TechDemo@45369@uber
-sdasde@36210@difficult
-TechDemo@37199@difficult
