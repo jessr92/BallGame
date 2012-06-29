@@ -1,34 +1,34 @@
 '''
-    Ball Game - Python implementation of a simple ball-through-the-hole game.
-    Copyright (C) 2012  Gordon Reid
+Project was conceptualised formally on the 3rd of November 2010
+Last updated 12th of January 2011 by Gordon Reid
+@title: Ball Game
+@author: Gordon Reid - gordon.reid1992@hotmail.co.uk
+This code is freely available for anybody to view and edit.
+I request that if any code is used that credit is given in an appropriate
+fashion (a.k.a my name mentioned in a section similar to this and visible
+in the user interface).
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-    The author can be contacted via email:
-    gordon.reid1992@hotmail.co.uk
-    OR
-    1002536r@student.gla.ac.uk
+Disclaimer:
+I, me (and similar) all reference to Gordon Reid
+(gordon.reid1992@hotmail.co.uk) unless explicitly stated.
+I have not intentionally stolen code, this is all my own work and as a result
+the property (programming projects) are solely owned by me.
+I accept no responsibility for any damages which may occur from the code.
+The code has been tested on my own computer systems running
+Ubuntu 10.04 Netbook Edition and Ubuntu 10.10 Desktop Edition x64 without
+causing any damage (to files or otherwise).
+The code is run at the users own risk.
+No support on the use on any of the the projects will be available.
 '''
 
 
 try:
     # Python 3.x
-    from tkinter import *  # @UnusedWildImport
+    from tkinter import * # @UnusedWildImport 
     from tkinter.messagebox import showerror
 except ImportError:
     # Python 2.x
-    from Tkinter import *  # @UnusedWildImport
+    from Tkinter import * # @UnusedWildImport 
     from tkMessageBox import showerror
 from os import listdir
 from random import randrange
@@ -61,7 +61,6 @@ class ball():
         self.moveLeft = False
         self.moveRight = False
 
-
 def ballGame(computerPlaying, computerLevel, userName, canvas, mainGameWindow):
     # Set starting variables and decide which picture to show as
     # the game background (bonusTrigger and count here just in case
@@ -76,14 +75,14 @@ def ballGame(computerPlaying, computerLevel, userName, canvas, mainGameWindow):
         dirList = listdir("backgrounds/")
     except Exception:
         success = False
-        print_exc(FILE=open("errlog.txt", "a"))
+        print_exc(file=open("errlog.txt", "a"))
         showerror("Wrong directory", "You appear to have forgotten to cd to " \
         + "the correct directory. A traceback has been written to " \
         + "errlog.txt in the program's directory.")
 
     if success:
         photos = []
-        # Find *.gif FILEs in background directory
+        # Find *.gif files in background directory
         for element in dirList:
             if str(element)[-4:] == ".gif":
                 photos += [element]
@@ -91,17 +90,17 @@ def ballGame(computerPlaying, computerLevel, userName, canvas, mainGameWindow):
                 whichPicture = "backgrounds/" + str(photos[randomNumber])
 
         try:
-            photo1 = PhotoImage(FILE=whichPicture)
+            photo1 = PhotoImage(file=whichPicture)
             canvas.create_image((xMin + xMax) / 2, \
                             (yMin + yMax) / 2, image=photo1)
         except Exception:
-            print_exc(FILE=open("errlog.txt", "a"))
+            print_exc(file=open("errlog.txt", "a"))
             showerror("Error - Failed to load image", "I could not load the " \
             + "background images for the game environment. The game will " \
             + "still load, just with a blank background. A traceback has " \
             + "been written to errlog.txt in the program's directory.")
 
-    # Define specific values for each ball and make the ball objects global
+    # Define specific values for each ball and make the ball objects global 
     # (for call back only, otherwise pass variables in).
     global playerOne, playerTwo
     playerOne = ball()
@@ -156,7 +155,7 @@ def ballGame(computerPlaying, computerLevel, userName, canvas, mainGameWindow):
 
     canvas.delete(playerOneInformation)
     canvas.delete(powerupInformation)
-    # Keep playing the game until one of the balls in
+    # Keep playing the game until one of the balls in 
     # play hits the top of the game area.
     while playerOne.hitTop == False and playerTwo.hitTop == False:
         playerOne, playerTwo, level = drawLine(playerOne, \
@@ -197,7 +196,7 @@ def gameOver(computerLevel, playerOne, playerTwo, computerPlaying, \
         + "Your final score is " + str(playerOne.score) \
         + ". You reached level " + str(level) + "."), width=780, font=theFont)
 
-    # Show the newly created text for five seconds then
+    # Show the newly created text for five seconds then 
     # destroy the window and save the score.
     canvas.update()
     canvas.after(5000)
@@ -206,9 +205,9 @@ def gameOver(computerLevel, playerOne, playerTwo, computerPlaying, \
 
 
 def writeScore(playerOne, computerLevel, computerPlaying, mainGameWindow):
-    FILEname = "resources/scores.txt"
+    filename = "resources/scores.txt"
 
-    # Work out what to save to the text FILE
+    # Work out what to save to the text file
     if computerPlaying == False:
         nameAndScore = str(playerOne.userName) + \
         "@" + str(playerOne.score) + "@alone"
@@ -221,26 +220,26 @@ def writeScore(playerOne, computerLevel, computerPlaying, mainGameWindow):
         "@" + str(playerOne.score) + "@" + str(computerLevel)
 
     # Convert the variable to be saved to string, remove punctuation,
-    # add a new line character then try and save it to the specified FILE.
+    # add a new line character then try and save it to the specified file.
     nameAndScore = str(nameAndScore)
     nameAndScore += "\n"
 
     try:
-        FILE = open(FILEname, "a")
-        FILE.writelines(nameAndScore)
-        FILE.writelines("")
-        FILE.close()
+        file = open(filename, "a")
+        file.writelines(nameAndScore)
+        file.writelines("")
+        file.close()
     except Exception:
-        print_exc(FILE=open("errlog.txt", "a"))
+        print_exc(file=open("errlog.txt", "a"))
         showerror("Error - Failed to write score", "I could not your score " \
-        + "to the scores FILE. A traceback has been written to errlog.txt "\
+        + "to the scores file. A traceback has been written to errlog.txt "\
         + "in the program's directory.")
 
     mainGameWindow.destroy()
 
 
 def drawLine(playerOne, playerTwo, canvas, level):
-    # Set values for count, starting yPos for line and
+    # Set values for count, starting yPos for line and 
     # xPos for the gap in the line.
     global count
     count = count + 1
@@ -257,7 +256,7 @@ def drawLine(playerOne, playerTwo, canvas, level):
     while yLine > yMin:
         level = int(count / 5) + 1
 
-        # Call appropriate function based on whether or not
+        # Call appropriate function based on whether or not 
         # the player is human or computer.
         if playerOne.isPlaying == True and playerOne.isHuman == True:
             playerOne = humanMove(playerOne, yLine, gapX)
@@ -271,7 +270,7 @@ def drawLine(playerOne, playerTwo, canvas, level):
         if playerTwo.isPlaying == True and playerTwo.isHuman == False:
             playerTwo = computerMove(playerTwo, yLine, gapX)
 
-        # If both balls are at the bottom of the game area and are fully
+        # If both balls are at the bottom of the game area and are fully 
         # overlapping, move player one by half a diameter to the right.
         if playerOne.xPos == playerTwo.xPos \
         and playerOne.yPos + playerOne.diameter == yMax \
@@ -304,7 +303,7 @@ def drawLine(playerOne, playerTwo, canvas, level):
                 playerTwo.xPos + playerTwo.diameter, \
                  playerTwo.yPos + playerTwo.diameter, fill="blue")
 
-        # Player one receives a score bonus if there ball is lower
+        # Player one receives a score bonus if there ball is lower 
         # down the game area than player two.
         if playerOne.isPlaying == True and playerTwo.isPlaying == True \
         and playerOne.yPos > playerTwo.yPos:
@@ -359,7 +358,7 @@ def drawLine(playerOne, playerTwo, canvas, level):
         if playerTwo.isPlaying == True:
             canvas.delete(ball2)
 
-        # If either the line or one of the balls has gone off the
+        # If either the line or one of the balls has gone off the 
         # top of the game area, quit the loop.
         if yLine <= yMin or playerOne.hitTop == True or \
         playerTwo.hitTop == True:
@@ -367,20 +366,20 @@ def drawLine(playerOne, playerTwo, canvas, level):
 
 
 def findPowerup(playerOne, playerTwo):
-    FILEname = "resources/powerups.txt"
+    filename = "resources/powerups.txt"
     powerupsAvailable = []
 
     try:
-        FILE = open(FILEname, "r")
+        file = open(filename, "r")
     except Exception:
-        FILE = ""
-        print_exc(FILE=open("errlog.txt", "a"))
+        file = ""
+        print_exc(file=open("errlog.txt", "a"))
         showerror("Error - Failed to load powerups", "I could not load the " \
         + "powerups because powerups.txt could not be found. A traceback has "\
         + "been written to errlog.txt in the program's directory.")
 
     # Add floating point numbers to powerupsAvailable list
-    for line in FILE:
+    for line in file:
         powerupsAvailable += [float(str(line[:-1]))]
 
     # Obtain a random powerup
@@ -417,11 +416,13 @@ def humanMove(ball, yLine, gapX):
         ball.xPos = xMin
         ball.moveLeft = False
 
+
     if ball.moveLeft and ball.isHuman and ball.isPlaying:
         ball.xPos -= ball.speed
 
     if ball.moveRight and ball.isHuman and ball.isPlaying:
         ball.xPos += ball.speed
+
 
     # If ball is off the right side of the game area then move it back inside.
     if ball.xPos + ball.diameter > xMax:
@@ -432,7 +433,7 @@ def humanMove(ball, yLine, gapX):
     if ball.yPos <= yMin:
         ball.hitTop = True
 
-    # If ball is not over the gap then make it sit on the line
+    # If ball is not over the gap then make it sit on the line 
     # (unless below the line by more than 15px).
     if ball.yPos + ball.diameter >= yLine - 3 \
     and ball.yPos + ball.diameter <= yLine + 15 \
@@ -447,7 +448,7 @@ def humanMove(ball, yLine, gapX):
 
 
 def computerMove(ball, yLine, gapX):
-    # Detection of whether or not the ball is out of the game area
+    # Detection of whether or not the ball is out of the game area 
     # is the same for computer and human balls.
     ball = humanMove(ball, yLine, gapX)
 
@@ -491,7 +492,7 @@ def play(userName, computerPlaying, computerLevel):
                         font=menuFont)
     mainGameWindow.config(menu=menubar)
 
-    # Define details for the canvas widget which sits inside the
+    # Define details for the canvas widget which sits inside the 
     # window (size and which function to call on key press).
     canvas = Canvas(mainGameWindow, width=800, height=500,)
     canvas.bind_all('<Key>', callback)
