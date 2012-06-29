@@ -68,7 +68,7 @@ class createWindow:
 
 	def showAbout(): # @NoSelf
 		# Show information about myself and the project.
-		showinfo("About", "Currently in development\n\nFree " \
+		showinfo("About", "No longer in active development\n\nFree " \
 		+ "Programming Project for CS1P University of Glasgow\n\nAuthor:\n" \
 		+ "Gordon Reid\n\nContact:\ngordon.reid1992@hotmail.co.uk")
 
